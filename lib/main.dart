@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'feature/explorer/bloc/explorer_cubit/explorer_cubit.dart';
+import 'feature/explorer/presentation/page/explorer_page.dart';
+import 'injection_container.dart' as di;
+import 'injection_container.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(const MyApp());
 }
 
@@ -15,19 +22,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage());
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Hello, Coco"),
-      ),
-    );
+        home: BlocProvider(
+          create: (context) => sl<ExplorerCubit>(),
+          child: const ExplorerPage(),
+        ));
   }
 }
