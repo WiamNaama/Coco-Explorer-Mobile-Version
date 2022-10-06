@@ -15,6 +15,11 @@ class ExplorerCubit extends Cubit<ExplorerState> {
     required this.explorerRepository,
   }) : super(const ExplorerState.initial());
 
+  /// Emit the [ExplorerState.loading()] state first then
+  ///
+  /// emit the [ExplorerState.successResult] state that represent [SearchResultModel] when
+  /// the explorerRespository return success.
+  /// if explorerRespository return failuser emit [ExplorerState.errorResult].
   void emitSearchResult(List<int> categoryIds, int pageNum) async {
     emit(const ExplorerState.loading());
     var response =
