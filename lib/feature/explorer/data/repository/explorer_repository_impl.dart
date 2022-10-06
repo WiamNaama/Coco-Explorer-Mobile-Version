@@ -18,8 +18,13 @@ class ExplorerRepositoryImpl extends ExplorerRepository {
   Future<ApiResult<SearchResultModel>> fetchSearchResult(
       List<int> categoryIds, int pageNum) async {
     try {
-      List<int> selectedImagesId = [];
+      /// All images id that returned from [fetchImagesIds].
       List<int> fetchedImagesIds = [];
+
+      /// Selected images id for every new request for [fetchImages, fetchCaptions, fetchSegmentations].
+      List<int> selectedImagesId = [];
+
+      /// Pagination handling.
       if (pageNum == 1) {
         final categoriesResponse = await explorerWebService.fetchImagesIds(
             {"category_ids": categoryIds, "querytype": "getImagesByCats"});
@@ -42,6 +47,9 @@ class ExplorerRepositoryImpl extends ExplorerRepository {
         }
       }
 
+      /// Call the [fetchImages, fetchCaptions, fetchSegmentations] with provide
+      ///
+      /// formData images_ids and querytype.
       final imagesResponse = await explorerWebService.fetchImages(
           {"image_ids": selectedImagesId, "querytype": "getImages"});
       final captionsResponse = await explorerWebService.fetchCaptions(
@@ -50,6 +58,7 @@ class ExplorerRepositoryImpl extends ExplorerRepository {
         {"image_ids": selectedImagesId, "querytype": "getInstances"},
       );
 
+      /// Parse the JSON response from the previous call then return [SearchResultModel].
       final result = SearchResultModel.fromJson(imagesResponse,
           captionsResponse, segmentationsResponse, fetchedImagesIds.length);
 
