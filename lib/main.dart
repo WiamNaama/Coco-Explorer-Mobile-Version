@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/themes/app_theme.dart';
 import 'feature/explorer/bloc/explorer_cubit/explorer_cubit.dart';
 import 'feature/explorer/presentation/page/explorer_page.dart';
 import 'injection_container.dart' as di;
@@ -19,9 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Coco Mobile',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: AppTheme.lightTheme(),
         home: BlocProvider(
           create: (context) => sl<ExplorerCubit>(),
           child: const ExplorerPage(),

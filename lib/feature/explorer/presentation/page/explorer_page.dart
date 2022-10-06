@@ -14,17 +14,23 @@ class _ExplorerPageState extends State<ExplorerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Search")),
-        body: Column(
-          children: [
-            Center(
-              child: TextButton(
-                  onPressed: () {
-                    context.read<ExplorerCubit>().emitSearchResult([2], 1);
-                  },
-                  child: const Text("Click me")),
-            )
-          ],
-        ));
+        body: Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Column(
+        children: [
+          Text(
+            "Search by Category",
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          Center(
+            child: TextButton(
+                onPressed: () {
+                  context.read<ExplorerCubit>().emitSearchResult([2], 1);
+                },
+                child: const Text("Click me")),
+          )
+        ],
+      ),
+    ));
   }
 }
