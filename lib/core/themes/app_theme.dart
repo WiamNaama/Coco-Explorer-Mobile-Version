@@ -8,7 +8,7 @@ class AppTheme {
       textTheme: const TextTheme(
         subtitle1: TextStyle(
           fontSize: 20,
-          color: textColor,
+          color: buttonTextColor,
           fontWeight: FontWeight.w500,
         ),
         button: TextStyle(
