@@ -8,3 +8,4 @@ const Color buttonTextColor = Colors.white;
 const Color secondaryColor = Colors.black;
 final Color focusedColor = Colors.blueAccent.shade200;
 const Color mainButtonColor = Color(0xff002DE3);
+const Color chipColor = Color(0xffE1CEB5);

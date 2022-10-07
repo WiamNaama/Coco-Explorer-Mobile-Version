@@ -2,7 +2,7 @@ import 'package:coco_app/feature/explorer/data/repository/explorer_repository.da
 
 import '../../../../core/networking/api_result/api_result.dart';
 import '../../../../core/networking/exception_handler/network_error_handler.dart';
-import '../data_source/explorer_web_service.dart';
+import '../data_source/remote_data/explorer_web_service.dart';
 import '../model/search_result_model.dart';
 
 class ExplorerRepositoryImpl extends ExplorerRepository {

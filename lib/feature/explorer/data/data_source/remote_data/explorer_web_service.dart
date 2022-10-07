@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 
-import '../../../../core/constant/web_service.dart';
+import '../../../../../core/constant/web_service.dart';
 
 part 'explorer_web_service.g.dart';
 

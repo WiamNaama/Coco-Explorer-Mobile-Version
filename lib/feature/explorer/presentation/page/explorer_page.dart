@@ -1,3 +1,5 @@
+import 'package:coco_app/feature/explorer/data/data_source/local_data/category_tag_data.dart';
+import 'package:coco_app/feature/explorer/data/model/category_tag_model.dart';
 import 'package:coco_app/feature/explorer/presentation/widget/text_form_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,10 @@ class ExplorerPage extends StatefulWidget {
 class _ExplorerPageState extends State<ExplorerPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController textController = TextEditingController();
+
+  /// Category ids
+  List<int> categoryIds = [];
+
   @override
   Widget build(BuildContext context) {
     AppSizeConfig.init(context);
@@ -52,6 +58,13 @@ class _ExplorerPageState extends State<ExplorerPage> {
                                 fontColor: secondaryColor,
                                 fontSize: 14,
                                 maxlines: 2,
+                                onChange: (value) {
+                                  if (value.isEmpty) {
+                                    setState(() {
+                                      categoryIds.clear();
+                                    });
+                                  }
+                                },
                                 onTap: () => {},
                               ),
                             ],
@@ -68,7 +81,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
                         onClick: () {
                           context
                               .read<ExplorerCubit>()
-                              .emitSearchResult([2], 1);
+                              .emitSearchResult(categoryIds, 1);
                         },
                       ),
                     )
@@ -97,6 +110,57 @@ class _ExplorerPageState extends State<ExplorerPage> {
               ),
 
               /// Chips section.
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 380),
+                  child: ListView.builder(
+                      itemCount: categoryTags.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: FilterChip(
+                            label: Text(categoryTags[index].title),
+                            onSelected: (value) => setState(
+                              () {
+                                /// Add the tagNumber to categoryIds
+                                ///
+                                /// So we can search using this list.
+                                /// else delete it from the list when uncheck the chip.
+
+                                if (value) {
+                                  categoryIds
+                                      .add(categoryTags[index].tagNumber);
+                                  textController.text +=
+                                      "${categoryTags[index].title} ";
+                                } else {
+                                  categoryIds
+                                      .remove(categoryTags[index].tagNumber);
+                                  if (categoryIds.isEmpty) {
+                                    textController.clear();
+                                  } else {
+                                    /// Update the text inside the textformfield
+                                    ///
+                                    /// when we delete tagNumber from the categoryIds list.
+                                    textController.clear();
+                                    categoryIds.map((e) {
+                                      textController.text +=
+                                          "${categoryTags[e - 1].title} ";
+                                    }).toList();
+                                  }
+                                }
+
+                                categoryTags[index].isSelected = value;
+                              },
+                            ),
+                            checkmarkColor: Colors.white,
+                            selected: categoryTags[index].isSelected,
+                            backgroundColor: chipColor,
+                          ),
+                        );
+                      }),
+                ),
+              ),
             ],
           ),
         ));

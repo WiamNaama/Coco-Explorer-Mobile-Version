@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'core/networking/dio_config/dio_config.dart';
 import 'core/networking/exception_handler/network_error_handler.dart';
 import 'core/networking/exception_handler/network_error_handler_impl.dart';
-import 'feature/explorer/data/data_source/explorer_web_service.dart';
+import 'feature/explorer/data/data_source/remote_data/explorer_web_service.dart';
 import 'feature/explorer/data/repository/explorer_repository.dart';
 import 'feature/explorer/data/repository/explorer_repository_impl.dart';
 
